@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💖</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffe6ea;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 85%;
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        .couple-img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 { color: #ff4d6d; font-size: 1.5rem; margin-bottom: 10px; }
+        p { color: #ff758c; font-weight: bold; }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        #yesBtn { 
+            background-color: #ff4d6d; 
+            color: white; 
+            width: 120px;
+            z-index: 100;
+        }
+
+        #noBtn { 
+            background-color: #adb5bd; 
+            color: white; 
+            width: 100px;
+        }
+
+        #finalMessage {
+            display: none;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .emoji-rain { 
+            position: absolute; 
+            font-size: 2rem; 
+            animation: fall 3s linear forwards; 
+            z-index: 1;
+        }
+        @keyframes fall { to { transform: translateY(100vh); } }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="quiz">
+            <img src="https://i.postimg.cc/5YTx5mnm/5YTx5mnm.jpg" alt="Us" class="couple-img">
+            <h1>Will you be my Valentine? 🥰</h1>
+            <p>Lots of love for you baby! ✨❤️</p>
+            
+            <div class="buttons">
+                <button id="yesBtn" onclick="celebrate()">Yes! 💖</button>
+                <button id="noBtn" onclick="makeYesBigger()">No</button>
+            </div>
+        </div>
+
+        <div id="finalMessage">
+            <img src="https://i.postimg.cc/YLQw6B47/YLQw6B47.jpg" alt="Love" class="couple-img">
+            <h1 style="font-size: 2rem;">YAYYY! 🎉</h1>
+            <h2>Yes, u are my valentine baby!</h2>
+            <p>I love you forever and ever! 💍🌹✨</p>
+            <img src="https://i.postimg.cc/Mn68Q4zJ/Mn68Q4zJ.jpg" alt="Couple Photo" class="couple-img" style="margin-top:10px;">
+        </div>
+    </div>
+
+    <script>
+        let yesSize = 1;
+        let noClicks = 0;
+
+        function makeYesBigger() {
+            noClicks++;
+            
+            yesSize += 0.4; 
+            const yesBtn = document.getElementById('yesBtn');
+            yesBtn.style.transform = `scale(${yesSize})`;
+            
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            const phrases = ["Are you sure?", "Pwease?", "Really??", "Baby nooo", "You're mean! 😭", "I'll cry..."];
+            noBtn.innerText = phrases[Math.min(noClicks, phrases.length - 1)];
+        }
+
+        function celebrate() {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('finalMessage').style.display = 'block';
+            document.body.style.backgroundColor = '#ff85a1';
+            
+            for(let i=0; i<40; i++) {
+                setTimeout(createEmoji, i * 150);
+            }
+        }
+
+        function createEmoji() {
+            const emojis = ['❤️', '💖', '🥰', '🌹', '✨', '💍'];
+            const e = document.createElement('div');
+            e.className = 'emoji-rain';
+            e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.top = '-50px';
+            document.body.appendChild(e);
+            setTimeout(() => e.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
